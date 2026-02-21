@@ -17,6 +17,9 @@
 
 
 
-const math = require("./math");
+// const math = require("./math");
 
-console.log(math.add(5, 3));
+// console.log(math.add(5, 3));
+
+import{add} from "./math.js";
+console.log(add(2,3));
