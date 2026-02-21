@@ -8,3 +8,9 @@ console.log(process.argv);
 //[2]  cd node_js1
 //[3]  dir
 //[4]  node script.js hello world
+
+let args=process.argv;
+
+for(let i=2;i<args.length;i++){
+    console.log("Hello to ", args[i]);
+}
