@@ -1,4 +1,4 @@
-const figlet = require("figlet");
+const figlet = require("figlet");  //figlet directly bcz package
 
 figlet("ARAFAT", function (err, data) {
     if (err) {
