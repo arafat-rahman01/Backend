@@ -21,5 +21,10 @@
 
 // console.log(math.add(5, 3));
 
-import{add} from "./math.js";
-console.log(add(2,3));
+// import{add} from "./math.js";
+// console.log(add(2,3));
+
+
+//[Directery to direc.  Data transfer]
+const info=require("../Fruits");
+console.log(info);
