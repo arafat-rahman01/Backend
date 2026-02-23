@@ -10,8 +10,26 @@ app.listen(port,()=>{
 
 //https://github.com/hoppscotch/hoppscotch/discussions/2051 [link in Github]
 
-app.use((req,res)=>{
-    console.log("Request Received");
-    res.send("Response send successfully");
-});
 
+//[1]
+// app.use((req,res)=>{
+//     console.log("Request Received");
+//     res.send("Response send successfully");
+// });
+
+//[2]
+app.use((req, res) => {
+    console.log("Request Received");
+
+    let data = {
+        success: true,
+        message: "Data fetched successfully",
+        students: [
+            { name: "Arafat", roll: 101 },
+            { name: "Rahim", roll: 102 },
+            { name: "Karim", roll: 103 }
+        ]
+    };
+
+    res.send(data);
+});
