@@ -9,6 +9,9 @@ app.listen(port,()=>{
 
 
 //https://github.com/hoppscotch/hoppscotch/discussions/2051 [link in Github]
+
 app.use((req,res)=>{
     console.log("Request Received");
+    res.send("Response send successfully");
 });
+
