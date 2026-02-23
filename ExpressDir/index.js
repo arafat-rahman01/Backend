@@ -6,3 +6,9 @@ let port=3050;
 app.listen(port,()=>{
     console.log(`app is listening in port ${port}`);
 });
+
+
+//https://github.com/hoppscotch/hoppscotch/discussions/2051 [link in Github]
+app.use((req,res)=>{
+    console.log("Request Received");
+});
