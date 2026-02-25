@@ -18,18 +18,35 @@ app.listen(port,()=>{
 // });
 
 //[2]
-app.use((req, res) => {
-    console.log("Request Received");
+// app.use((req, res) => {
+//     console.log("Request Received");
 
-    let data = {
-        success: true,
-        message: "Data fetched successfully",
-        students: [
-            { name: "Arafat", roll: 101 },
-            { name: "Rahim", roll: 102 },
-            { name: "Karim", roll: 103 }
-        ]
-    };
+//     let data = {
+//         success: true,
+//         message: "Data fetched successfully",
+//         students: [
+//             { name: "Arafat", roll: 101 },
+//             { name: "Rahim", roll: 102 },
+//             { name: "Karim", roll: 103 }
+//         ]
+//     };
 
-    res.send(data);
+//     res.send(data);
+// });
+
+
+app.get("/",(req,res)=>{
+    res.send("Home button");
+});
+
+app.get("/apple",(req,res)=>{
+    res.send("Apple ");
+});
+
+app.get("/mango",(req,res)=>{
+    res.send("Mango");
+});
+
+app.get((req,res)=>{
+    res.status(404).send("Not Found");
 });
