@@ -35,6 +35,7 @@ app.listen(port,()=>{
 // });
 
 
+//[4] Route + Nodemon
 app.get("/",(req,res)=>{
     res.send("Home button");
 });
@@ -49,4 +50,11 @@ app.get("/mango",(req,res)=>{
 
 app.get((req,res)=>{
     res.status(404).send("Not Found");
+});
+
+//[5]  Path Parameter
+app.get("/user/:id", (req, res) => {
+    let userId = req.params.id;
+
+    res.send(`User ID is: ${userId}`);
 });
