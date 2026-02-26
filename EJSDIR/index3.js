@@ -15,3 +15,8 @@ app.get("/:ig/:username",(req,res)=>{
     let {username}=req.params;
     res.render("instagram",{username});
 });
+
+app.get("/:ig/:age",(req,res)=>{
+    let {age}=req.params;
+    res.render("instagram",{age});
+});
