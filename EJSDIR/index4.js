@@ -22,9 +22,21 @@ app.get("/", (req, res) => {
 // });
 
 //Dynamic
-app.get("/students/:name", (req, res) => {
-    let students = ["Arafat", "Rahim", "Karim", "Sakib"];
-    let name = req.params.name;
+// app.get("/students/:name", (req, res) => {
+//     let students = ["Arafat", "Rahim", "Karim", "Sakib"];
+//     let name = req.params.name;
 
-    res.render("students", { students, name });
+//     res.render("students", { students, name });
+// });
+
+//object
+app.get("/profile", (req, res) => {
+
+    let user = {
+        name: "Arafat",
+        age: 21,
+        city: "Chandpur"
+    };
+
+    res.render("students", { user }); 
 });

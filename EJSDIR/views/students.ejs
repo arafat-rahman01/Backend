@@ -23,7 +23,7 @@
         <% }) %>
     </ul> -->
 
-    <h1>Selected Student: <%= name %></h1>
+    <!-- <h1>Selected Student: <%= name %></h1>
 
     <% students.forEach(student => { %>
         <% if(student === name) { %>
@@ -31,7 +31,14 @@
         <% } else { %>
             <li><%= student %></li>
         <% } %>
-    <% }) %>
+    <% }) %> -->
+
+    <!-- Object  comment out then it work -->  
+    <ul>
+        <% for(let key in user) { %>
+            <li><%= key %> : <%= user[key] %></li>
+        <% } %>
+    </ul>
 
 </body>
 </html>
