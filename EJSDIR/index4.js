@@ -16,8 +16,15 @@ app.get("/", (req, res) => {
 });
 
 //static
-app.get("/students", (req, res) => {
-    let students = ["Arafat", "Rahim", "Karim", "Sakib"];
-    res.render("students", { students });
-});
+// app.get("/students", (req, res) => {
+//     let students = ["Arafat", "Rahim", "Karim", "Sakib"];
+//     res.render("students", { students });
+// });
 
+//Dynamic
+app.get("/students/:name", (req, res) => {
+    let students = ["Arafat", "Rahim", "Karim", "Sakib"];
+    let name = req.params.name;
+
+    res.render("students", { students, name });
+});
