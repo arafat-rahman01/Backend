@@ -15,13 +15,23 @@
 
     <h2>Student List</h2> -->
 
-    <p>Selected Student: <%= name %></p>
+    <!-- <p>Selected Student: <%= name %></p>
 
     <ul>
         <% students.forEach(student => { %>
             <li><%= student %></li>
         <% }) %>
-    </ul>
+    </ul> -->
+
+    <h1>Selected Student: <%= name %></h1>
+
+    <% students.forEach(student => { %>
+        <% if(student === name) { %>
+            <li style="color:red"><%= student %></li>
+        <% } else { %>
+            <li><%= student %></li>
+        <% } %>
+    <% }) %>
 
 </body>
 </html>
