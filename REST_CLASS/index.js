@@ -52,6 +52,15 @@ app.get("/posts/:id",(req,res)=>{
     res.render("show.ejs",{post});
 });
 
+app.patch("/post/:id",(req,res)=>{
+    let {id}=req.params;
+    let newContent=req.body.content;
+    let post=posts.find((p)=> id===p.id);
+    post.content=newContent;
+    console.log(post);
+    req.send("patch request working");
+})
+
 app.listen(port,()=>{
     console.log("Listening the port: 8080");
 });
