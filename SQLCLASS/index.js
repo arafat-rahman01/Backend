@@ -45,9 +45,22 @@ app.get("/",(req,res)=>{
   }
 });
 
+//Show Route
+app.get("/user",(req,res)=>{
+  let q=`SELECT * FROM user`;
+  try{
+      connection.query(q,(err,users)=>{
+      if(err) throw err;
+      res.render("showuser.ejs",{users});
+    });
+  }catch(err){
+    console.log(err);
+    res.send("Some error in database");
+  }
+});
 
 app.listen("8080",()=>{
   console.log( `Serever is listening 8080`);
 });
 
-//connection.end();
+
