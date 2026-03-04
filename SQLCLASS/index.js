@@ -32,11 +32,11 @@ let getRandomUser=()=>{
 
 
 app.get("/",(req,res)=>{
-  let q= `SELECT count(*) FROM user`;
+  let q= `SELECT count(*) AS total FROM user`;
     try{
       connection.query(q,(err,result)=>{
       if(err) throw err;
-      let count=result[0]["count(*)"];
+      let count=result[0].total;
       res.render("home.ejs",{count});
     });
   }catch(err){
@@ -62,5 +62,3 @@ app.get("/user",(req,res)=>{
 app.listen("8080",()=>{
   console.log( `Serever is listening 8080`);
 });
-
-
