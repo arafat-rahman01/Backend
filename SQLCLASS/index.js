@@ -80,8 +80,60 @@ app.get("/user/:id/edit",(req,res)=>{
 });
 
 //Update Route
+// app.patch("/user/:id",(req,res)=>{
+//   let {id}=req.params;
+//   let {password: formPass,username:newUsername}=req.body;
+//   let q=`SELECT * FROM user WHERE id='${id}'`;
+
+//   try{
+//       connection.query(q,(err,result)=>{
+//         if(err) throw err;
+//         let user=result[0];
+//         if(formPass != user.password){
+//           res.send("Wrong Password");
+//         }else{
+//           let q2=`UPDATE user SET username='${newUsername}' WHERE id= '${id}' `;
+//           connection.query(q2,(err,result)=>{
+//             if(err) throw err;
+//             res.send(result);
+//           });
+//         }
+//       res.send(user);
+//     });
+//   }catch(err){
+//     console.log(err);
+//     res.send("Some error in database");
+//   }
+// });
+
 app.patch("/user/:id",(req,res)=>{
-  res.send("updated");
+  let { id } = req.params;
+  let { password: formPass, username: newUsername } = req.body;
+
+  let q = "SELECT * FROM user WHERE id = ?";
+
+  connection.query(q,[id],(err,result)=>{
+    if(err) return res.send("Database error");
+
+    let user = result[0];
+
+    if(!user){
+      return res.send("User not found");
+    }
+
+    if(formPass !== user.password){
+      return res.send("Wrong Password");
+    }
+
+    let q2 = "UPDATE user SET username = ? WHERE id = ?";
+
+    connection.query(q2,[newUsername,id],(err,result)=>{
+      if(err) return res.send("Update failed");
+
+      res.redirect("/user");
+    });
+
+  });
 });
 
 app.listen("8080",()=>{
