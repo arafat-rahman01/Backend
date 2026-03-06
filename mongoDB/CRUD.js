@@ -24,3 +24,6 @@ db.posts.updateOne(
   { $set: { likes: 1 } },
   { upsert: true }
 )
+
+//delete
+db.posts.deleteOne({ title: "Post 1" })
