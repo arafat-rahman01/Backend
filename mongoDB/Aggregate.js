@@ -30,3 +30,13 @@ db.posts.aggregate([
     }
   }
 ])
+
+//sum
+db.posts.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalLikes: { $sum: "$likes" }
+    }
+  }
+])
