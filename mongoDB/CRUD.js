@@ -27,3 +27,4 @@ db.posts.updateOne(
 
 //delete
 db.posts.deleteOne({ title: "Post 1" })
+
