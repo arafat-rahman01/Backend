@@ -4,3 +4,7 @@ db.posts.insertOne({
   category: "News",
   likes: 0
 })
+
+//find
+db.posts.find({condition})
+
