@@ -40,3 +40,24 @@ db.posts.aggregate([
     }
   }
 ])
+
+//average
+db.posts.aggregate([
+  {
+    $group: {
+      _id: null,
+      avgLikes: { $avg: "$likes" }
+    }
+  }
+])
+
+//Data Transform
+db.posts.aggregate([
+  {
+    $project: {
+      category: 1,
+      likes: 1,
+      reducedViews: { $divide: ["$views", 10] }
+    }
+  }
+])
