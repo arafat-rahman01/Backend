@@ -8,3 +8,12 @@ db.posts.insertOne({
 //find
 db.posts.find({condition})
 
+//updateOne
+db.posts.updateOne(
+  { title: "Post 1" },   // filter
+  {
+    $set: {               // update operator
+      likes: 10
+    }
+  }
+)
