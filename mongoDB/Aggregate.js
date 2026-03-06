@@ -21,3 +21,12 @@ db.posts.insertMany(
     }
 )
 
+//Group
+db.posts.aggregate([
+  {
+    $group: {
+      _id: "$category",
+      totalPosts: { $sum: 1 }
+    }
+  }
+])
