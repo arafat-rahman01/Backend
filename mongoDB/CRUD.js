@@ -17,3 +17,10 @@ db.posts.updateOne(
     }
   }
 )
+
+//upsert
+db.posts.updateOne(
+  { title: "Post 5" },
+  { $set: { likes: 1 } },
+  { upsert: true }
+)
