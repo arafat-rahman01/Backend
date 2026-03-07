@@ -23,5 +23,3 @@ This repository is created for learning and practicing backend development using
 - Creating REST APIs
 - Using CRUD operations
 - Querying database with filters & projection
-
-##  Project Structure
