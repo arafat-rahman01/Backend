@@ -55,17 +55,26 @@ const User=mongoose.model("User",userSchema);
 // })
 
 //findOneAndUpdate
-User.findOneAndUpdate(
-    {age:{$gt:40}},
-    {age:88},
-    {new:true}
+// User.findOneAndUpdate(
+//     {age:{$gt:40}},
+//     {age:88},
+//     {new:true}
+// )
+// .then((res)=>{
+//     console.log(res);
+// })
+// .catch((err)=>{
+//     console.log(err);
+// })
+
+//delete
+User.findOneAndDelete(
+    { age: { $gt: 40 } }   // filter
 )
-.then((res)=>{
-    console.log(res);
+.then(res => {
+    console.log("Deleted document:", res);
 })
-.catch((err)=>{
-    console.log(err);
-})
+.catch(err => console.log(err));
 
 //Insert One
 // const user1=new User({
