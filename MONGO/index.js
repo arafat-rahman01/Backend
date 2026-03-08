@@ -19,10 +19,36 @@ const userSchema=new mongoose.Schema({
 //Create Model
 const User=mongoose.model("User",userSchema);
 
-User.find({age :{$gt:50}})
+//[1] Find
+// User.find({age :{$gt:50}})
+// .then((res)=>{
+//     //console.log(res);
+//     console.log(res[0].name); //Object+ Specific name
+// })
+// .catch((err)=>{
+//     console.log(err);
+// })
+
+//UpdateOne
+// User.updateOne(
+//     {name: "Arafat"},
+//     {age:30}
+// )
+// .then((res)=>{
+//     console.log(res);
+// })
+// .catch((err)=>{
+//     console.log(err);
+// });
+
+//update many
+User.updateMany(
+    {age:{$gt:40}},
+    {$set: { status: "Senior" }},
+    { strict: false }
+)
 .then((res)=>{
     console.log(res);
-    console.log(res[0].name); //Object+ Specific name
 })
 .catch((err)=>{
     console.log(err);
@@ -44,12 +70,13 @@ User.find({age :{$gt:50}})
 //         console.log(err);
 //     })
 
-//Insert One
+//Insert Many
 
 // User.insertMany([
 //     {name: "Tony", email: "tony@gmail.com", age: 50},
-//     {name: "Arafat", email: "Arafat@gmail.com", age: 25},
+//     {name: "Thor", email: "Thor@gmail.com", age: 40},
 //     {name: "Bruce", email: "bruce@gmail.com", age: 67}
 // ]).then((res)=>{
 //     console.log(res);
 // })
+
