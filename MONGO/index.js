@@ -42,10 +42,23 @@ const User=mongoose.model("User",userSchema);
 // });
 
 //update many
-User.updateMany(
+// User.updateMany(
+//     {age:{$gt:40}},
+//     {$set: { status: "Senior" }},
+//     { strict: false }
+// )
+// .then((res)=>{
+//     console.log(res);
+// })
+// .catch((err)=>{
+//     console.log(err);
+// })
+
+//findOneAndUpdate
+User.findOneAndUpdate(
     {age:{$gt:40}},
-    {$set: { status: "Senior" }},
-    { strict: false }
+    {age:88},
+    {new:true}
 )
 .then((res)=>{
     console.log(res);
