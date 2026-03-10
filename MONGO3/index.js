@@ -34,7 +34,13 @@ app.get("/chats",async (req,res)=>{
     let chats=await Chat.find();
     console.log(chats);
     res.render("index.ejs",{chats})
-})
+});
+
+app.get("/chats/new",(req,res)=>{
+    res.render("new");
+});
+
+
 
 app.get("/",(req,res)=>{
     res.send("root is working");
