@@ -9,7 +9,7 @@
     <p>Edit your chat: <%=chat._id %></p>
     <p>This chat was sent from <b> <%=chat.from %> to <%=chat.to %></b> </p>
 
-    <form method="post" action="/chats/<%=chat._id %>">
+    <form method="post" action="/chats/<%=chat._id %>?_method=PUT">
         <textarea name="msg" rows="5" cols="20"><%=chat.msg %></textarea>
         <button>Edit</button>
     </form>
