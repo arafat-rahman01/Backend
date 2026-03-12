@@ -1,17 +1,23 @@
 body{
-    margin-left: 20px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-family:Arial;
+background:#e9e6e4;
 }
 
 .chat{
-    background-color: aliceblue;
-    padding: 20px;
-    border-radius: 16px;
-    display: inline-block;
+background:white;
+padding:10px;
+margin:10px;
+border-radius:10px;
+width:300px;
+}
+
+.from{
+font-weight:bold;
+color:#075e54;
 }
 
 .msg{
-    background-color: dodgerblue;
-    color: white;
-    padding: 5px 15px;
+background:#dcf8c6;
+padding:8px;
+border-radius:5px;
 }
