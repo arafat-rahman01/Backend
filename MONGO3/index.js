@@ -36,7 +36,7 @@ app.get("/chats/:id/edit",async (req,res)=>{
     let {id}=req.params;
     let chat=await Chat.findById(id);
     res.render("edit",{chat});
-})
+});
 
 //Update route
 app.put("/chats/:id",async (req,res)=>{
