@@ -9,8 +9,8 @@ main()
     .then(()=>{
         console.log("connect to DB");
     })
-    .catch((err)=>{
-        console.log(err);
+    .catch((error)=>{
+        console.log(error);
     })
 
 async function main(){
