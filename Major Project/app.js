@@ -4,6 +4,7 @@ const mongoose=require("mongoose");
 const Listing=require("./models/listing.js");
 const path=require("path");
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
+const methodOverride=
 
 main()
     .then(()=>{
@@ -53,6 +54,14 @@ app.get("/listings/:id",async(req,res)=>{
     const listing=await Listing.findById(id);
     res.render("listings/show",{listing});
 });
+
+//Edit route
+app.get("/listings/:id/edit",async(req,res)=>{
+    let {id}=req.params;
+    const listing=await Listing.findById(id);
+    res.render("listings/edit.ejs",{listing});
+});
+
 
 // app.get("/testListing",async(req,res)=>{
 //     let sampleListing= new Listing({
