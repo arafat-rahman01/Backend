@@ -1,9 +1,9 @@
 <%layout("/layouts/boilerplate") %>
 <body>
     <h3>All Listings</h3>
-    <form method="get" action="/listings/new">
+    <!-- <form method="get" action="/listings/new">
         <button>Create new list</button>
-    </form>
+    </form> -->
     <ul>
         <% for(let listings of allListings){ %> 
             <li><a href="/listings/<%=listings._id %>"><%=listings.title %></a></li>
