@@ -35,6 +35,9 @@ body{
     justify-content: center;
 }
 
+.trems{
+    margin-left: 7px;
+}
 .f-info-socials i{
     font-size: 1.2rem;
     margin-right: 1rem;
