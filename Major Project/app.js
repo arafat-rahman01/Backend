@@ -71,11 +71,29 @@ app.get("/listings/:id/edit",async(req,res)=>{
 });
 
 //update route
-app.put("/listings/:id",async(req,res)=>{
-    let {id}=req.params;
-    await Listing.findByIdAndUpdate(id,{...req.body.listing});
+app.put("/listings/:id", async (req, res) => {
+    let { id } = req.params;
+    let data = req.body.listing;
+
+    if (!data.image || !data.image.url || data.image.url.trim() === "") {
+        delete data.image;
+    } else {
+        data.image = {
+            url: data.image.url,
+            filename: "listingimage"
+        };
+    }
+
+    console.log(data);
+
+    await Listing.findByIdAndUpdate(id, data);
     res.redirect(`/listings/${id}`);
 });
+// app.put("/listings/:id",async(req,res)=>{
+//     let {id}=req.params;
+//     await Listing.findByIdAndUpdate(id,{...req.body.listing});
+//     res.redirect(`/listings/${id}`);
+// });
 
 //Delete route
 app.delete("/listings/:id",async(req,res)=>{
