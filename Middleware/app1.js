@@ -7,6 +7,14 @@ app.use((req, res, next) => {
     next();
 });
 
+// middleware/auth.js
+module.exports.isLoggedIn = (req, res, next) => {
+    if (!req.user) {
+        return res.send("You must be logged in!");
+    }
+    next();
+};
+
 // Route
 app.get("/", (req, res) => {
     res.send("Hello World");
