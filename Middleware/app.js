@@ -24,11 +24,6 @@ const checkToken=(req,res,next)=>{
     throw new ExpressError(401,"ACCESS DENIED!");
 };
 
-app.use((err, req, res, next) => {
-    let { status = 500, message = "Something went wrong" } = err;
-    res.status(status).send(message);
-});
-
 app.get("/api",checkToken,(req,res)=>{
     res.send("data");
 });
@@ -60,6 +55,11 @@ app.get("/api",checkToken,(req,res)=>{
 // Route
 app.get("/", (req, res) => {
     res.send("Hello World");
+});
+
+app.use((err, req, res, next) => {
+    let { status = 500, message = "Something went wrong" } = err;
+    res.status(status).send(message);
 });
 
 app.listen(3000);
