@@ -58,7 +58,7 @@ app.get("/", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-    let { status = 500, message = "Something went wrong" } = err;
+    let { status, message } = err;
     res.status(status).send(message);
 });
 
