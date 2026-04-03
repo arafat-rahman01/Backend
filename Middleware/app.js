@@ -51,6 +51,9 @@ app.get("/api",checkToken,(req,res)=>{
 //     res.send("You can create listing");
 // });
 
+app.get("/admin",(req,res)=>{
+    throw new ExpressError(403,"Access is admit to forbidden");
+})
 
 // Route
 app.get("/", (req, res) => {
