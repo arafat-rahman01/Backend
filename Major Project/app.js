@@ -6,6 +6,7 @@ const path=require("path");
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
+const wrapAsync=require("./utils/wrapAsync.js");
 
 main()
     .then(()=>{
@@ -46,14 +47,11 @@ app.get("/listings/new",(req,res)=>{
 });
 
 //Create route
-app.post("/listings",async(req,res)=>{
-   // let {title,description,image,price,country,location}=req.body;
-   //console.log(req.body);
-   console.log(req.body.listing);
-   const newListing=new Listing(req.body.listing);
-   await newListing.save();
-   res.redirect("/listings");
-}); 
+app.post("/listings",wrapAsync(async(req,res,next)=>{
+    const newListing=new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+})); 
 
 //Show Route
 app.get("/listings/:id",async(req,res)=>{
@@ -114,6 +112,10 @@ app.delete("/listings/:id",async(req,res)=>{
 //     console.log("Sample was saved");
 //     res.send("successful testing");
 // });
+
+app.use((err,req,res,next)=>{
+    res.send("Somthing went wrong");
+});
 
 app.listen(8080,()=>{
     console.log("Serever is listening to port 8080");
