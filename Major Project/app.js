@@ -120,14 +120,17 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
 //     res.send("successful testing");
 // });
 
-app.use((req, res) => {
-    res.status(404).send("Page not found");
+// 404 handler
+app.use((req, res, next) => {
+    let err = new Error("Page Not Found");
+    err.statusCode = 404;
+    next(err);
 });
 
-app.use((err,req,res,next)=>{
-    let {statusCode=500,message="Something went wrong"}=err;
-    res.render("error.ejs",{message});
-//    res.status(statusCode).send(message);
+// error middleware
+app.use((err, req, res, next) => {
+    let { statusCode = 500, message = "Something went wrong" } = err;
+    res.status(statusCode).render("error.ejs", { message });
 });
 
 app.listen(8080,()=>{
