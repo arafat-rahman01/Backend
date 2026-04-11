@@ -3,7 +3,7 @@
 <body>
   <div class="container mt-5 d-flex justify-content-center">
     <% if(listing) { %>
-      <div class="card mb-3" style="max-width: 800px; width: 100%;">
+      <div class="card mb-3" style="max-width: 750px; width: 100%;">
         <% if(listing.image && listing.image.url){ %>
           <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title || 'Listing Image' %>">
         <% } else { %>
