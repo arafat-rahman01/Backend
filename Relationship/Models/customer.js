@@ -41,12 +41,14 @@ const addCust=async()=>{
     await newOrder.save();
     await newOrder.save();
 };
-addCust();
+
+// addCust();
 
 const delCust=async()=>{
-    let data= await Customer.findByIdAndDelete("")
+    await Customer.findByIdAndDelete("69d902a97674840f42296096");
 }
 
+delCust();
 
 
 // const addCustomer=async()=>{
