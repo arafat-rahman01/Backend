@@ -27,24 +27,46 @@ const customerSchema=new Schema({
 const Order=mongoose.model("Order",orderSchema);
 const Customer=mongoose.model("Customer",customerSchema);
 
-const addCustomer=async()=>{
-    let cust1=new Customer({
-        name: "Rahul Kumar",
+const addCust=async()=>{
+    let newCust= new Customer({
+        name: "Rohan"
     });
 
-    let order1= await Order.findOne({item: "Chips"});
-    let order2= await Order.findOne({item: "Chocolate"});
+    let newOrder = new Order({
+        item: "Pizza",
+        price: 250
+    });
 
-    cust1.orders.push(order1);
-    cust1.orders.push(order2);
-
-    let res= await cust1.save();
-    console.log(res);
+    newCust.orders.push(newOrder);
+    await newOrder.save();
+    await newOrder.save();
 };
+addCust();
 
-addCustomer();
+const delCust=async()=>{
+    let data= await Customer.findByIdAndDelete("")
+}
 
-const addOrder=async()=>{
+
+
+// const addCustomer=async()=>{
+//     let cust1=new Customer({
+//         name: "Rahul Kumar",
+//     });
+
+//     let order1= await Order.findOne({item: "Chips"});
+//     let order2= await Order.findOne({item: "Chocolate"});
+
+//     cust1.orders.push(order1);
+//     cust1.orders.push(order2);
+
+//     let res= await cust1.save();
+//     console.log(res);
+// };
+
+// addCustomer();
+
+//const addOrder=async()=>{
     // let res=await Order.insertMany([
     //     {item: "Somosa", price: 12},
     //     {item: "Chips", price: 10},
@@ -52,8 +74,8 @@ const addOrder=async()=>{
     // ]);
     // console.log(res);
 
-    let res=await Customer.find({});
-    console.log(res);
-};
+//     let res=await Customer.find({});
+//     console.log(res);
+// };
 
 // addOrder();
