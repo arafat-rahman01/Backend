@@ -8,7 +8,7 @@ const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError.js");
-const { listingSchema }=require("./schema.js");
+const { listingSchema,reviewSchema }=require("./schema.js");
 const Review=require("./models/review.js");
 
 main()
@@ -49,6 +49,17 @@ const validateListings = (req, res, next) => {
     }
 };
 
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(", ");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
+
 //index route
 app.get("/listings",wrapAsync(async(req,res)=>{
     const allListings= await Listing.find({});
@@ -70,7 +81,7 @@ app.post("/listings",validateListings,wrapAsync(async(req,res,next)=>{
 //Show Route
 app.get("/listings/:id",wrapAsync(async(req,res)=>{
     let {id}=req.params;
-    const listing=await Listing.findById(id);
+    const listing=await Listing.findById(id).populate("reviews");
     res.render("listings/show",{listing});
 }));
 
@@ -100,6 +111,7 @@ app.put("/listings/:id",validateListings, wrapAsync(async (req, res) => {
     await Listing.findByIdAndUpdate(id, data);
     res.redirect(`/listings/${id}`);
 }));
+
 // app.put("/listings/:id",async(req,res)=>{
 //     let {id}=req.params;
 //     await Listing.findByIdAndUpdate(id,{...req.body.listing});
@@ -115,17 +127,18 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
 }));
 
 //Reviews
-app.post("/listings/:id/reviews",async(req,res)=>{
+app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
 
-    listing.reviews.push(newReview);
-
     await newReview.save();
+
+    listing.reviews.push(newReview._id);
+
     await listing.save();
 
-    res.redirect(`/listings/${listing._id}`);
-});
+    res.redirect(`/listings/${listing._id}`); 
+}));
 
 // app.get("/testListing",async(req,res)=>{
 //     let sampleListing= new Listing({
