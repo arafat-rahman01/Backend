@@ -11,6 +11,8 @@ const ExpressError=require("./utils/ExpressError.js");
 const { listingSchema,reviewSchema }=require("./schema.js");
 const Review=require("./models/review.js");
 
+const listings =  require("./routes/listing.js");
+
 main()
     .then(()=>{
         console.log("connect to DB");
@@ -38,16 +40,7 @@ app.get("/",(req,res)=>{
     res.send("Hi, i'm root");
 });
 
-const validateListings = (req, res, next) => {
-    let { error } = listingSchema.validate(req.body);
 
-    if (error) {
-        let errMsg = error.details.map((el) => el.message).join(", ");
-        throw new ExpressError(400, errMsg);
-    } else {
-        next();
-    }
-};
 
 const validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
@@ -60,71 +53,7 @@ const validateReview = (req, res, next) => {
     }
 };
 
-//index route
-app.get("/listings",wrapAsync(async(req,res)=>{
-    const allListings= await Listing.find({});
-    res.render("listings/index.ejs",{allListings})
-}));
-
-//New Route
-app.get("/listings/new",(req,res)=>{
-    res.render("listings/new.ejs");
-});
-
-//Create route
-app.post("/listings",validateListings,wrapAsync(async(req,res,next)=>{
-    const newListing=new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-})); 
-
-//Show Route
-app.get("/listings/:id",wrapAsync(async(req,res)=>{
-    let {id}=req.params;
-    const listing=await Listing.findById(id).populate("reviews");
-    res.render("listings/show",{listing});
-}));
-
-//Edit route
-app.get("/listings/:id/edit",wrapAsync(async(req,res)=>{
-    let {id}=req.params;
-    const listing=await Listing.findById(id);
-    res.render("listings/edit.ejs",{listing});
-}));
-
-//update route
-app.put("/listings/:id",validateListings, wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let data = req.body.listing;
-
-    if (!data.image || !data.image.url || data.image.url.trim() === "") {
-        delete data.image;
-    } else {
-        data.image = {
-            url: data.image.url,
-            filename: "listingimage"
-        };
-    }
-
-    console.log(data);
-
-    await Listing.findByIdAndUpdate(id, data);
-    res.redirect(`/listings/${id}`);
-}));
-
-// app.put("/listings/:id",async(req,res)=>{
-//     let {id}=req.params;
-//     await Listing.findByIdAndUpdate(id,{...req.body.listing});
-//     res.redirect(`/listings/${id}`);
-// });
-
-//Delete route
-app.delete("/listings/:id",wrapAsync(async(req,res)=>{
-    let { id } = req.params;
-    let deletedlisting=await Listing.findByIdAndDelete(id);
-    console.log(deletedlisting);
-    res.redirect("/listings");
-}));
+app.use("/listings",listings); 
 
 //Reviews
 //Post Review Route
