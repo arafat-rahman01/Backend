@@ -44,11 +44,23 @@ router.get(
 router.post(
   "/",
   validateListings,
-  wrapAsync(async (req, res, next) => {
-    const newListing = new Listing(req.body.listing);
+  wrapAsync(async (req, res) => {
+
+    let data = req.body.listing;
+
+    if (typeof data.image === "string") {
+      data.image = {
+        url: data.image,
+        filename: "listingimage",
+      };
+    }
+
+    const newListing = new Listing(data);
     await newListing.save();
+
+    req.flash("success", "New Listing created!");
     res.redirect("/listings");
-  }),
+  })
 );
 
 //Edit route
