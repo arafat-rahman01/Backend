@@ -32,10 +32,12 @@ app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 const sessionOptions={
-    secret: "mysupersecrectcode",
+    secret: "mysupersecretcode",
     resave: false,
     saveUninitialized: true
-}
+};
+
+app.use(session(sessionOptions));
 
 app.use((req, res, next) => {
     res.locals.layout = "layout";
