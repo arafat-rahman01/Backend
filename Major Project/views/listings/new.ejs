@@ -27,9 +27,14 @@
             <label for="image" class="form-label">Image Link</label>
                 <input 
                     type="text" 
-                    name="listing[image]" 
+                    name="listing[image][url]" 
                     placeholder="enter image URL/Link"
                     class="form-control"
+                />
+                <input 
+                    type="hidden" 
+                    name="listing[image][filename]" 
+                    value="listingimage"
                 />
         </div>
 
