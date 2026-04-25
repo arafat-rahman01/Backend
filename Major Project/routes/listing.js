@@ -93,6 +93,7 @@ router.put(
     console.log(data);
 
     await Listing.findByIdAndUpdate(id, data);
+    req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
   }),
 );
@@ -104,6 +105,7 @@ router.delete(
     let { id } = req.params;
     let deletedlisting = await Listing.findByIdAndDelete(id);
     console.log(deletedlisting);
+    req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
   }),
 );
