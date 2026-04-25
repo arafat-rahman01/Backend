@@ -53,7 +53,7 @@ app.use(flash());
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     next();
-})
+});
 
 app.use("/listings",listings); 
 app.use("/listings/:id/reviews",reviews);
