@@ -53,7 +53,7 @@ app.get("/",(req,res)=>{
 app.use(session(sessionOptions));
 app.use(flash());
 
-app.use(passport.initialize);
+app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
@@ -64,6 +64,16 @@ app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
+});
+
+app.get("/demouser",async(req,res)=>{
+    let fakeUser= new User({
+        email: "arafatrahman@gmail.com",
+        username: "arafat-rahman"
+    });
+
+    let registerUser= await User.register(fakeUser,"password");
+    res.send(registerUser);
 });
 
 app.use("/listings",listings); 
