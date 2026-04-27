@@ -51,9 +51,7 @@ router.post(
   isLoggedIn,
   validateListings,
   wrapAsync(async (req, res) => {
-
     let data = req.body.listing;
-
     if (typeof data.image === "string") {
       data.image = {
         url: data.image,
