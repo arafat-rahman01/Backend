@@ -34,14 +34,15 @@ router.post(
             failureFlash: true
         }) 
         ,async(req,res)=>{
-            res.flash("success","Welcome to Wonderlust! You are logged in!");
+            req.flash("success","Welcome to Wonderlust! You are logged in!");
+            res.redirect("/listings");
         }
 )
 
 router.get("/logout",(req,res,next)=>{
     req.logout((err)=>{
         if(err){
-            next(err);
+           next(err);
         }
         req.flash("success","you are logged out now");
         res.redirect("/listings");
