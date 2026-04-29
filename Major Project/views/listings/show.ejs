@@ -13,8 +13,8 @@
         <div class="card-body px-4 py-3">
           <h3 class="card-title mb-3"><%= listing.title || 'No Title' %></h3>
           <p class="card-text mb-2">
-            <b><i><%=listing.owner.username %></i></b>
-            <br>
+            Owned by: <b><i><%=listing.owner.username %></i></b>
+            <br><br>
             <%= listing.description || 'No Description' %>
           </p>
 
