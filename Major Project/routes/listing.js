@@ -50,7 +50,7 @@ router.post(
   "/",
   isLoggedIn,
   validateListings,
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req, res,next) => {
     let data = req.body.listing;
     if (typeof data.image === "string") {
       data.image = {
@@ -60,6 +60,7 @@ router.post(
     }
 
     const newListing = new Listing(data);
+    newListing.owner = req.user._id;
     await newListing.save();
 
     req.flash("success", "New Listing created!");
