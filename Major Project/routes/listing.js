@@ -101,7 +101,11 @@ router.put(
       };
     }
 
-    console.log(data);
+    let listing = await Listing.findById(id);
+    if(!listing.owner.equals(currUser._id)){
+      req.flash("error","You don't have permission to edit");
+      res.redirect(`/listings/${id}`);
+    }
 
     await Listing.findByIdAndUpdate(id, data);
     req.flash("success", "Listing Updated!");
