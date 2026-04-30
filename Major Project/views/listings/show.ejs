@@ -26,14 +26,14 @@
           <p class="card-text mb-3">
             <strong>Location:</strong> <%= listing.location || 'Unknown' %>, <%= listing.country || 'Unknown' %>
           </p>
-
+          <% if(currUser && listing.owner._id.toString() === currUser._id.toString()) { %>
             <div class="d-flex gap-2">
               <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary">Edit Listing</a>
               <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
                 <button class="btn btn-danger">Delete Listing</button>
               </form>
             </div>
-            
+          <% } %>
         </div>
       </div>
     <% } else { %>
@@ -43,6 +43,7 @@
 
   <div class="col-8 offset-3">
     <hr>
+      <% if(currUser) {%>
     <h4>Leave a Review</h4>
     <form class="mb-3" action="/listings/<%= listing._id%>/reviews" method="POST" novalidate class="needs-validation">
       <div class="mb-3 mt-3">
@@ -56,8 +57,9 @@
       </div>
       <button class="btn btn-outline-dark">Submit</button>
     </form>
-
-    <hr>
+     <hr>
+    <% } %>
+   
 
     <p><b>All Reviews</b></p>
     <div class="row">
