@@ -102,9 +102,9 @@ router.put(
     }
 
     let listing = await Listing.findById(id);
-    if(!listing.owner.equals(currUser._id)){
+    if(!listing.owner.equals(res.locals.currUser._id)){
       req.flash("error","You don't have permission to edit");
-      res.redirect(`/listings/${id}`);
+      return res.redirect(`/listings/${id}`);
     }
 
     await Listing.findByIdAndUpdate(id, data);
