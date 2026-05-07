@@ -11,6 +11,9 @@ router.route("/")
   .get("/",wrapAsync(listingController.index))
   .post("/",isLoggedIn,validateListings,wrapAsync(listingController.createListing));
 
+//New Route
+router.get("/new",isLoggedIn,listingController.renderNewForm);
+
 //Show Route + update route + Delete route
 router.route("/id")
   .get("/:id",wrapAsync(listingController.showListing))
@@ -28,8 +31,7 @@ router.route("/id")
   wrapAsync(listingController.destroyRoute),
 )
 
-//New Route
-router.get("/new",isLoggedIn,listingController.renderNewForm);
+
 
 //Edit route
 router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
