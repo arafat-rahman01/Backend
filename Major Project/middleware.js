@@ -66,7 +66,7 @@ module.exports.isReviewAuthor = async(req, res, next) => {
     let { id,reviewId } = req.params;
     let review = await Review.findById(reviewId);
 
-    if (!review.owner._id.equals(req.user._id)) {
+    if (!review.author._id.equals(req.user._id)) {
         req.flash("error", "You don't have permission!");
         return res.redirect(`/listings/${id}`);
     }
