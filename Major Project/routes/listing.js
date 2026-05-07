@@ -6,8 +6,11 @@ const { isLoggedIn,isOwner,validateListings } = require("../middleware.js");
 
 const listingController = require("../controllers/listings.js");
 
-//index route
-router.get("/",wrapAsync(listingController.index));
+//Index + Delete Route
+router.route("/")
+  .get("/",wrapAsync(listingController.index))
+  .post("/",isLoggedIn,validateListings,wrapAsync(listingController.createListing));
+
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
@@ -15,8 +18,6 @@ router.get("/new",isLoggedIn,listingController.renderNewForm);
 //Show Route
 router.get("/:id",wrapAsync(listingController.showListing));
 
-//Create route
-router.post("/",isLoggedIn,validateListings,wrapAsync(listingController.createListing));
 
 //Edit route
 router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
