@@ -11,32 +11,27 @@ router.route("/")
   .get("/",wrapAsync(listingController.index))
   .post("/",isLoggedIn,validateListings,wrapAsync(listingController.createListing));
 
-
-//New Route
-router.get("/new",isLoggedIn,listingController.renderNewForm);
-
-//Show Route
-router.get("/:id",wrapAsync(listingController.showListing));
-
-
-//Edit route
-router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
-
-//update route
-router.put(
+//Show Route + update route + Delete route
+router.route("/id")
+  .get("/:id",wrapAsync(listingController.showListing))
+  .put(
   "/:id",
   isLoggedIn,
   isOwner,
   validateListings,
   wrapAsync(listingController.updateListing),
-);
-
-//Delete route
-router.delete(
+  )
+  .delete(
   "/:id",
   isLoggedIn,
   isOwner,
   wrapAsync(listingController.destroyRoute),
-);
+)
+
+//New Route
+router.get("/new",isLoggedIn,listingController.renderNewForm);
+
+//Edit route
+router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
 
 module.exports = router;
