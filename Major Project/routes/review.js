@@ -8,19 +8,7 @@ const { validateReview, isLoggedIn, isReviewAuthor } = require("../middleware.js
 
 //Reviews
 //Post Review Route
-router.post("/",isLoggedIn,validateReview,wrapAsync(async(req,res)=>{
-    let listing = await Listing.findById(req.params.id);
-    let newReview = new Review(req.body.review);
-    newReview.author = req.user._id;
-    console.log(newReview);
-    
-    listing.reviews.push(newReview._id);
-    await newReview.save();
-    await listing.save();
-
-    req.flash("success", "New Review created!");
-    res.redirect(`/listings/${listing._id}`); 
-}));
+router.post("/",isLoggedIn,validateReview,wrapAsync());
 
 //Delete review route
 router.delete("/:reviewId",isLoggedIn,isReviewAuthor,wrapAsync(async(req,res)=>{
