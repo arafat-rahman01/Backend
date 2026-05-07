@@ -8,24 +8,22 @@ const listingController = require("../controllers/listings.js");
 
 //Index + Delete Route
 router.route("/")
-  .get("/",wrapAsync(listingController.index))
-  .post("/",isLoggedIn,validateListings,wrapAsync(listingController.createListing));
+  .get(wrapAsync(listingController.index))
+  .post(isLoggedIn,validateListings,wrapAsync(listingController.createListing));
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
 //Show Route + update route + Delete route
 router.route("/id")
-  .get("/:id",wrapAsync(listingController.showListing))
+  .get(wrapAsync(listingController.showListing))
   .put(
-  "/:id",
   isLoggedIn,
   isOwner,
   validateListings,
   wrapAsync(listingController.updateListing),
   )
   .delete(
-  "/:id",
   isLoggedIn,
   isOwner,
   wrapAsync(listingController.destroyRoute),
