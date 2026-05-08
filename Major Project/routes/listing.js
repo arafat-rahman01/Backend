@@ -15,7 +15,7 @@ router.route("/")
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
 //Show Route + update route + Delete route
-router.route("/id")
+router.route("/:id")
   .get(wrapAsync(listingController.showListing))
   .put(
   isLoggedIn,
