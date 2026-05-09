@@ -12,7 +12,6 @@ const upload = multer({ dest: 'uploads/'});
 //Index + Delete Route
 router.route("/")
   .get(wrapAsync(listingController.index))
-//  .post(isLoggedIn,validateListings,wrapAsync(listingController.createListing));
     .post( upload.single('listingImage'),(req,res)=>{
       res.send(req.file);
     });
