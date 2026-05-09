@@ -6,6 +6,9 @@ const { isLoggedIn,isOwner,validateListings } = require("../middleware.js");
 
 const listingController = require("../controllers/listings.js");
 
+const multer = require('multer');
+const upload = multer({ dest: 'upload/'});
+
 //Index + Delete Route
 router.route("/")
   .get(wrapAsync(listingController.index))
