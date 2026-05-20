@@ -16,7 +16,7 @@ router.route("/")
     .post(
       isLoggedIn,
       validateListings,
-      upload.single('listingImage'),
+      upload.single('listing[image]'),
       wrapAsync(listingController.createListing)
     );
 
