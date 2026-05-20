@@ -16,9 +16,9 @@ router.route("/")
     .post(
       isLoggedIn,
       validateListings,
-      upload.single('listingImage'),(req,res)=>{
-      res.send(req.file);
-    });
+      upload.single('listingImage'),
+      wrapAsync(listingController.createListing)
+    );
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
