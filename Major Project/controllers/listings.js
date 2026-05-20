@@ -1,79 +1,99 @@
-const Listing=require("../models/listing");
+const Listing = require("../models/listing");
 
-module.exports.index=async (req, res) => {
+module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
 };
 
-module.exports.renderNewForm=(req, res) => {
-  res.render("listings/new.ejs");
+module.exports.renderNewForm = (req, res) => {
+    res.render("listings/new.ejs");
 };
 
-module.exports.showListing=async (req, res) => {
+module.exports.showListing = async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews").populate("owner").populate({
-      path: "reviews",
-      populate: { path: "author" }
-    });
-    if(!listing){
-      req.flash("error","Listing you requested for does not exist!");
-      return res.redirect("/listings");
-    }
-    res.render("listings/show", { listing });
-  };
 
-  module.exports.createListing = async (req, res,next) => {
-      let url = req.file.path;
-      let filename = req.file.filename;
-      let data = req.body.listing;
-      if (typeof data.image === "string") {
-        data.image = {
-          url: data.image,
-          filename: "listingimage",
+    const listing = await Listing.findById(id)
+        .populate("owner")
+        .populate({
+            path: "reviews",
+            populate: { path: "author" }
+        });
+
+    if (!listing) {
+        req.flash("error", "Listing does not exist!");
+        return res.redirect("/listings");
+    }
+
+    res.render("listings/show.ejs", { listing });
+};
+
+module.exports.createListing = async (req, res) => {
+    let data = req.body.listing;
+
+    const newListing = new Listing(data);
+    newListing.owner = req.user._id;
+
+    if (req.file) {
+        newListing.image = {
+            url: req.file.path,
+            filename: req.file.filename
         };
-      }
-  
-      const newListing = new Listing(data);
-      newListing.owner = req.user._id;
-      newListing.image = {url,filename};
-      await newListing.save();
-  
-      req.flash("success", "New Listing created!");
-      res.redirect("/listings");
+    }
+
+    await newListing.save();
+
+    req.flash("success", "New Listing Created!");
+    res.redirect("/listings");
 };
 
-module.exports.renderEditForm=async (req, res) => {
+module.exports.renderEditForm = async (req, res) => {
     let { id } = req.params;
+
     const listing = await Listing.findById(id);
-    if(!listing){
-      req.flash("error","Listing you requested for does not exist!");
-      return res.redirect("/listings");
+
+    if (!listing) {
+        req.flash("error", "Listing does not exist!");
+        return res.redirect("/listings");
     }
-    res.render("listings/edit.ejs", { listing });
-}
+
+    let originalImageUrl = listing.image?.url?.replace(
+        "/upload",
+        "/upload/w_250"
+    );
+
+    res.render("listings/edit.ejs", {
+        listing,
+        originalImageUrl
+    });
+};
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-    let data = req.body.listing;
 
-    if (!data.image || !data.image.url || data.image.url.trim() === "") {
-      delete data.image;
-    } else {
-      data.image = {
-        url: data.image.url,
-        filename: "listingimage",
-      };
+    let listing = await Listing.findByIdAndUpdate(
+        id,
+        req.body.listing,
+        { new: true, runValidators: true }
+    );
+
+    if (req.file) {
+        listing.image = {
+            url: req.file.path,
+            filename: req.file.filename
+        };
+
+        await listing.save();
     }
 
-    await Listing.findByIdAndUpdate(id, data);
     req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
 };
 
-module.exports.destroyRoute= async (req, res) => {
+module.exports.destroyRoute = async (req, res) => {
     let { id } = req.params;
-    let deletedlisting = await Listing.findByIdAndDelete(id);
-    console.log(deletedlisting);
+
+    await Listing.findByIdAndDelete(id);
+
     req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
-  }
+};

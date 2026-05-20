@@ -1,39 +1,38 @@
-if(process.env.NODE_ENV != "production"){
-    require("dotenv").config();
-}
+require("dotenv").config();
 
-console.log(process.env.SECRET);
-
-const express=require("express");
-const app=express();
-const mongoose=require("mongoose");
-const path=require("path");
-const methodOverride=require("method-override");
-const ejsMate=require("ejs-mate");
-const ExpressError=require("./utils/ExpressError.js");
-const session=require("express-session");
-const flash=require("connect-flash");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const path = require("path");
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
+const session = require("express-session");
+const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-const listingRouter =  require("./routes/listing.js");
-const reviewRouter=require("./routes/review.js");
-const userRouter=require("./routes/user.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
-const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL =
+    process.env.MONGO_URL ||
+    "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
-    .then(()=>{
-        console.log("connect to DB");
-    })
-    .catch((error)=>{
-        console.log(error);
-    })
+.then(() => {
+    console.log("Connected to DB");
+})
+.catch(err => {
+    console.log("DB Error:", err);
+});
 
-async function main(){
+async function main() {
     await mongoose.connect(MONGO_URL);
 }
+
+
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -47,7 +46,7 @@ const sessionOptions={
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expries: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     },
