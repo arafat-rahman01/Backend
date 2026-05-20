@@ -23,6 +23,7 @@ module.exports.showListing=async (req, res) => {
   };
 
   module.exports.createListing = async (req, res,next) => {
+      let url = req.file.path;
       let data = req.body.listing;
       if (typeof data.image === "string") {
         data.image = {
