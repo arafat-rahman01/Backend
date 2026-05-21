@@ -76,14 +76,13 @@ module.exports.updateListing = async (req, res) => {
         { new: true, runValidators: true }
     );
 
-    if (req.file) {    //2nd time update listing image
-        listing.image = {
-            url: req.file.path,
-            filename: req.file.filename
-        };
+    if(typeof req.file !== "undefined"){
+    let url = req.file.path;
+    let filename = req.file.filename;
 
-        await listing.save();
-    }
+    listing.image = { url, filename };
+    await listing.save();
+}
 
     req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);

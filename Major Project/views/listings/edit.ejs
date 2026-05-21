@@ -4,7 +4,12 @@
     <div class="col-md-8 offset-md-2">
         <div class="card shadow p-4">
         <h3>Edit your Listing</h3>
-        <form method="post" action="/listings/<%=listing._id %>?_method=PUT" class="needs-validation" novalidate>
+        <form
+            method="post"
+            action="/listings/<%= listing._id %>?_method=PUT"
+            class="needs-validation"
+            novalidate
+            enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input 
@@ -28,8 +33,7 @@
             <label for="image" class="form-label">Upload New Image</label>
             <input 
                 type="file" 
-                name="listing[image][url]" 
-                placeholder="Leave blank to keep current image"
+                name="listing[image]" 
                 class="form-control"
             />
         </div>
