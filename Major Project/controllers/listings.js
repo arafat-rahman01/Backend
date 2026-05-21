@@ -76,7 +76,7 @@ module.exports.updateListing = async (req, res) => {
         { new: true, runValidators: true }
     );
 
-    if (req.file) {
+    if (req.file) {    //2nd time update listing image
         listing.image = {
             url: req.file.path,
             filename: req.file.filename
