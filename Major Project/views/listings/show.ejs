@@ -4,7 +4,7 @@
     <% if(listing) { %>
       <div class="card mb-3 listing-card" style="max-width: 750px; width: 100%;">
         <% if(listing.image && listing.image.url){ %>
-          <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title || 'Listing Image' %>">
+          <img src="<%= listing.image.url %>" class="card-img-top listing-img" alt="<%= listing.title || 'Listing Image' %>">
         <% } else { %>
           <img src="https://via.placeholder.com/800x400?text=No+Image" class="card-img-top" alt="No Image">
         <% } %>
