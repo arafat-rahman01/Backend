@@ -1,6 +1,5 @@
 <% layout("/layouts/boilerplate") %>
 
-<body>
   <div class="container mt-5 d-flex justify-content-center">
     <% if(listing) { %>
       <div class="card mb-3 listing-card" style="max-width: 750px; width: 100%;">
@@ -42,8 +41,8 @@
   </div>
 
   <div class="col-8 offset-3">
-    <hr>
       <% if(currUser) {%>
+        <hr>
     <h4>Leave a Review</h4>
     <form class="mb-3 needs-validation" action="/listings/<%= listing._id%>/reviews" method="POST" novalidate >
       <div class="mb-3 mt-3">
@@ -79,8 +78,9 @@
     <% } %>
    
 
-    <p><b>All Reviews</b></p>
+    <% if(listing.reviews.length>0)  {%>
     <div class="row">
+      <p><b>All Reviews</b></p>
       <% for(review of listing.reviews){%>
         <div class="card col-5 ms-3 mb-3">
           <div class="card-body">
@@ -97,6 +97,25 @@
         </div>
       <% } %>
     </div>
-    
+    <% } %>
+    <div class="container mb-3">
+      <h3>Where you'll be</h3>
+      <div id="map"></div>
+    </div>
   </div>
-</body>
+  
+<script>
+  var map = L.map('map').setView([23.8103, 90.4125], 10);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  L.marker([23.8103, 90.4125]).addTo(map)
+    .bindPopup("Dhaka")
+    .openPopup();
+
+  setTimeout(() => {
+  map.invalidateSize();
+  }, 200);
+</script>
