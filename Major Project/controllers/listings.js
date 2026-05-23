@@ -65,8 +65,6 @@ module.exports.createListing = async (req, res) => {
     }
 
     await newListing.save();
-    console.log(req.body.listing.location);
-    console.log(geoData);
 
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
