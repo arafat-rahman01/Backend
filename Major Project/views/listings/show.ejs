@@ -12,7 +12,7 @@
         <div class="card-body px-4 py-3">
           <h3 class="card-title mb-3"><%= listing.title || 'No Title' %></h3>
           <p class="card-text mb-2">
-            Owned by: <b><i><%=listing.owner.username %></i></b>
+            Owned by: <b><i><%= listing.owner?.username || "Unknown User" %></i></b>
             <br><br>
             <%= listing.description || 'No Description' %>
           </p>
@@ -105,17 +105,19 @@
   </div>
   
 <script>
-  var map = L.map('map').setView([23.8103, 90.4125], 10);
+  let coords = JSON.parse('<%- JSON.stringify(listing.geometry?.coordinates || [90.4125, 23.8103]) %>');
+  let map = L.map('map').setView([coords[1], coords[0]], 10);
+  // map.fitBounds([
+  //     [coords[1], coords[0]],
+  //     [coords[1], coords[0]]
+  // ]);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  L.marker([23.8103, 90.4125]).addTo(map)
-    .bindPopup("Dhaka")
+  L.marker([coords[1], coords[0]])
+    .addTo(map)
+    .bindPopup("Your Location")
     .openPopup();
-
-  setTimeout(() => {
-  map.invalidateSize();
-  }, 200);
 </script>

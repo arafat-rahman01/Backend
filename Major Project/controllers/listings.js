@@ -1,4 +1,11 @@
 const Listing = require("../models/listing");
+const NodeGeocoder = require("node-geocoder");
+
+const options = {
+    provider: "openstreetmap"
+};
+
+const geocoder = NodeGeocoder(options);
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -28,10 +35,27 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
+
     let data = req.body.listing;
 
+    let geoData = await geocoder.geocode(data.location);
+
+    if (!geoData.length) {
+        req.flash("error", "Invalid location!");
+        return res.redirect("/listings/new");
+    }
+
     const newListing = new Listing(data);
+
     newListing.owner = req.user._id;
+
+    newListing.geometry = {
+        type: "Point",
+        coordinates: [
+            geoData[0].longitude,
+            geoData[0].latitude
+        ]
+    };
 
     if (req.file) {
         newListing.image = {
@@ -41,6 +65,8 @@ module.exports.createListing = async (req, res) => {
     }
 
     await newListing.save();
+    console.log(req.body.listing.location);
+    console.log(geoData);
 
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
