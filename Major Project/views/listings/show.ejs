@@ -25,7 +25,7 @@
           <p class="card-text mb-3">
             <strong>Location:</strong> <%= listing.location || 'Unknown' %>, <%= listing.country || 'Unknown' %>
           </p>
-          <% if(currUser && listing.owner._id.toString() === currUser._id.toString()) { %>
+         <% if(currUser && listing.owner && listing.owner._id.toString() === currUser._id.toString()) { %>
             <div class="d-flex gap-2">
               <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary">Edit Listing</a>
               <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
