@@ -5,6 +5,31 @@ const options = {
     provider: "openstreetmap"
 };
 
+async function fixOldListings() {
+    let listings = await Listing.find({ "geometry.coordinates": { $exists: false } });
+
+    for (let l of listings) {
+        if (l.location) {
+            let geoData = await geocoder.geocode(l.location);
+
+            if (geoData.length) {
+                l.geometry = {
+                    type: "Point",
+                    coordinates: [
+                        geoData[0].longitude,
+                        geoData[0].latitude
+                    ]
+                };
+                await l.save();
+            }
+        }
+    }
+
+    console.log("All old listings updated!");
+}
+
+fixOldListings();
+
 const geocoder = NodeGeocoder(options);
 
 module.exports.index = async (req, res) => {
