@@ -18,6 +18,9 @@
     .filter p{
         font-size: 0.8rem;
     }
+    .tax-info{
+        display: none;
+    }
 </style>
 
 <div id="filters">
@@ -83,6 +86,7 @@
                             <b><%= listing.title %></b> <br>
                             <span>&#2547;</span>
                             <%= listing && listing.price ? listing.price.toLocaleString("en-In") : '0' %>/night
+                            <i class="tax-info">&nbsp; &nbsp; +20% GST</i>
                         </p>
                     </div>
                 </div>
