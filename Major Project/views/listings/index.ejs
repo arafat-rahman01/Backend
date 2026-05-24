@@ -4,6 +4,7 @@
     #filters{
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
     }
     .filter{
         text-align: center;
@@ -20,6 +21,15 @@
     }
     .tax-info{
         display: none;
+    }
+    .tax-toggle{
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 3.15rem;
+        padding: 1rem;
+        margin-left: 2rem;
+        display: flex;
+        align-items: center;
     }
 </style>
 
@@ -58,7 +68,15 @@
     </div>
     <div class="filter">
         <div><i class="fa-regular fa-snowflake"></i></div>
-        <p>Arctic Pools</p>
+        <p>Arctic</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Domes</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-ship"></i></div>
+        <p>Boats</p>
     </div>
     <div class="tax-toggle">
         <div class="form-check-reverse form-switch">
